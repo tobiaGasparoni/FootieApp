@@ -25,7 +25,7 @@ SECRET_KEY = 'e)87ohk%s@9x-1#b7%_w&_uw-zy87n89u*5o$@mptvc+x!4hgb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['footie-app.heorkuapp.com']
 
 
 # Application definition
