@@ -111,5 +111,3 @@ class Parent(models.Model):
 
     def __str__(self):
         return "%s %s %s %s" % (self.name.upper(), self.lastname.upper(), self.emal, self.phone)
-
-
