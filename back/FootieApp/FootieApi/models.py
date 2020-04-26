@@ -2,6 +2,7 @@ from django.db import models
 
 class Admin(models.Model):
     accessCode = models.IntegerField()
+
     def __str__(self):
         return "%s" % (self.accessCode)
 
@@ -37,12 +38,16 @@ class Student(models.Model):
         ('FootiePlay', 'Footie Play'),
     )
 
+    CAMPUS = (
+        ('LaColina', 'La Colina'),
+        ('LaCalera', 'La Calera'),
+        ('Cedritos', 'Cedritos')
+    )
+
     parent = models.ForeignKey('Parent', on_delete=models.CASCADE, default="")
     report = models.ForeignKey('Report', on_delete=models.CASCADE, default="", null=True, blank = True)
-    package = models.ForeignKey('Package', on_delete=models.CASCADE, default="", null=True, blank = True)
-    members = models.ManyToManyField('TrainingDay', through='Attendance')
     name = models.CharField(max_length=50)
-    lastname = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
     level = models.IntegerField(choices=LEVELS, default="")
     numLessonsPaid = models.IntegerField()
     numLessonsLeft = models.IntegerField()
@@ -51,40 +56,23 @@ class Student(models.Model):
     nextTerm = models.CharField(max_length=20, choices=TERMS, default="")
     paidStatus = models.CharField(max_length=20, choices=PAID_STATUS, default="")
     category = models.CharField(max_length=20, choices=CATEGORY, default="")
-    campus = models.CharField(max_length=20)
+    campus = models.CharField(max_length=20, choices=CAMPUS)
 
     def __str__(self):
         return "%s %s - %s, Remaining lessons: %s" % (self.name.upper(), self.lastname.upper(), self.campus, self.numLessonsLeft)
 
-class Attendance(models.Model):
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    trainingday = models.ForeignKey('TrainingDay', on_delete=models.CASCADE)
-    attendance = models.BooleanField
-
-    def __str__(self):
-        return "%s %s %r" % (self.student.name, self.trainingday, self.attendance)
-
-
-
 class TrainingDay(models.Model):
     date = models.DateField()
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, default=None)
+    attended = models.BooleanField
 
     def __str__(self):
         return "%s" % (str(self.date))
 
-
-class Week(models.Model):
-    startDate = models.DateField()
-    days = models.ManyToManyField(TrainingDay)
-
-    def __str__(self):
-        return "%s" % (str(self.startDate))
-
-
 class Package(models.Model):
     name = models.CharField(max_length=100)
     numLessons = models.IntegerField()
-    weeks = models.ManyToManyField(Week)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return "%s - Lessons: %s" % (self.name.upper(), self.numLessons)
@@ -95,19 +83,17 @@ class Report(models.Model):
     englishReport = models.CharField(max_length=400)
     valuesReport = models.CharField(max_length=400)
     emotionalReport = models.CharField(max_length=400)
-    nextTermReport = models.CharField(max_length=400)
+    actionPoints = models.CharField(max_length=400)
     footballSkillsReport = models.CharField(max_length=400)
 
     def __str__(self):
         return "%s %s" % (self.title.upper(), str(self.date))
 
-
-
 class Parent(models.Model):
     name = models.CharField(max_length=50)
-    lastname = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
     phone = models.IntegerField()
-    emal = models.EmailField()
+    email = models.EmailField()
 
     def __str__(self):
-        return "%s %s %s %s" % (self.name.upper(), self.lastname.upper(), self.emal, self.phone)
+        return "%s %s %s %s" % (self.name.upper(), self.lastname.upper(), self.email, self.phone)

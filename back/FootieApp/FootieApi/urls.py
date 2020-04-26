@@ -8,7 +8,7 @@ router.register(r'packages', views.PackageViewSet)
 router.register(r'parents', views.ParentViewSet)
 router.register(r'training_days', views.TrainingDayViewSet)
 router.register(r'reports', views.ReportViewSet)
-router.register(r'weeks', views.WeekViewSet)
+router.register(r'access_code', views.AdminViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

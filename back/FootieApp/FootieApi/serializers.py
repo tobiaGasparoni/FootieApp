@@ -1,15 +1,13 @@
 from rest_framework import serializers
-from .models import Student, Attendance, TrainingDay, Week, Package, Report, Parent
+from .models import Student, TrainingDay, Package, Report, Parent, Admin
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
         fields = ('parent',
                   'report',
-                  'package',
-                  'members',
                   'name',
-                  'lastname',
+                  'lastName',
                   'level',
                   'numLessonsPaid',
                   'numLessonsLeft',
@@ -21,25 +19,15 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
                   'campus'
                   )
 
-class AttendanceSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Attendance
-        fields = ('student', 'trainingday', 'attendance')
-
 class TrainingDaySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TrainingDay
-        fields = ('date',)
-
-class WeekSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Week
-        fields = ('startDate', 'days')
+        fields = ('date', 'student', 'attended')
 
 class PackageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Package
-        fields = ('name', 'numLessons', 'weeks')
+        fields = ('name', 'numLessons', 'student')
 
 class ReportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -49,10 +37,15 @@ class ReportSerializer(serializers.HyperlinkedModelSerializer):
                   'englishReport',
                   'valuesReport',
                   'emotionalReport',
-                  'nextTermReport',
+                  'actionPoints',
                   'footballSkillsReport')
 
 class ParentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Parent
-        fields = ('name', 'lastname', 'phone', 'emal')
+        fields = ('name', 'lastName', 'phone', 'email')
+
+class AdminSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Admin
+        fields = ('accessCode',)

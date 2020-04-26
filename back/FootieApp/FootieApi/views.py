@@ -1,22 +1,14 @@
 from rest_framework import viewsets
-from .serializers import StudentSerializer, AttendanceSerializer, TrainingDaySerializer, WeekSerializer, PackageSerializer, ReportSerializer, ParentSerializer
-from .models import Student, Attendance, TrainingDay, Week, Package, Report, Parent
+from .serializers import StudentSerializer, TrainingDaySerializer, PackageSerializer, ReportSerializer, ParentSerializer, AdminSerializer
+from .models import Student, TrainingDay, Package, Report, Parent, Admin
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
-class AttendanceViewSet(viewsets.ModelViewSet):
-    queryset = Attendance.objects.all()
-    serializer_class = AttendanceSerializer
-
 class TrainingDayViewSet(viewsets.ModelViewSet):
     queryset = TrainingDay.objects.all()
     serializer_class = TrainingDaySerializer
-
-class WeekViewSet(viewsets.ModelViewSet):
-    queryset = Week.objects.all()
-    serializer_class = WeekSerializer
 
 class PackageViewSet(viewsets.ModelViewSet):
     queryset = Package.objects.all()
@@ -29,3 +21,7 @@ class ReportViewSet(viewsets.ModelViewSet):
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
+
+class AdminViewSet(viewsets.ModelViewSet):
+    queryset = Admin.objects.all()
+    serializer_class = AdminSerializer
