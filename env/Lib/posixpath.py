@@ -375,7 +375,6 @@ def normpath(path):
 
 def abspath(path):
     """Return an absolute path."""
-    print("HEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY" + path)
     path = os.fspath(path)
     if not isabs(path):
         if isinstance(path, bytes):
